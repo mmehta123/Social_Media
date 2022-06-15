@@ -11,15 +11,23 @@ const getPosts = async (req, res) => {
 };
 
 
-const createPost = async(req, res) => {
-    const post=req.body;
-
-    const newPost=new PostMessage(post);
+const createPost = async (req, res) => {
+    // const { creator, title, message, tags, selectedFile } = req.body;
+    const post = req.body;
     try {
-        await newPost.save();
-        res.status(201).json(newPost)
+        // const newPostMessage = await PostMessage.create({
+        //     creator, title, message, tags,selectedFile
+        // });   
+        // console.log(newPostMessage);    
+
+        // OR
+
+        const newPostMessage = new PostMessage(post);
+        await newPostMessage.save();
+
+        return res.status(201).json(newPostMessage);
     } catch (error) {
-        res.status(409).json({message:error.message});
+        res.status(409).json({ message: error.message + " abc" });
     }
 };
 
