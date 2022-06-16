@@ -1,5 +1,5 @@
 const PostMessage = require("../models/postMessage.model");
-const mongoose= require("mongoose");
+const mongoose = require("mongoose");
 
 const getPosts = async (req, res) => {
     try {
@@ -41,8 +41,19 @@ const updatePost = async (req, res) => {
         return res.status(404).send("id is not valid");
     }
 
-    const updatedPost = await PostMessage.findByIdAndUpdate(_id, {...post,_id}, { new: true });
+    const updatedPost = await PostMessage.findByIdAndUpdate(_id, { ...post, _id }, { new: true });
     return res.json(updatedPost);
 }
 
-module.exports = { getPosts, createPost, updatePost };
+const deletePost = async (req, res) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).send("id is not valid");
+    }
+
+    await PostMessage.findByIdAndRemove(id);
+    return res.json({message:"Post deleted successfully"});
+
+}
+
+module.exports = { getPosts, createPost, updatePost, deletePost };
