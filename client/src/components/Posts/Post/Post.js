@@ -5,8 +5,9 @@ import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import moment from "moment";
+import SelectInput from "@material-ui/core/Select/SelectInput";
 
-const Post = ({ post }) => {
+const Post = ({ post, setCurrentId }) => {
     const classes = useStyles();
     return (
         <Card className={classes.card}>
@@ -17,7 +18,7 @@ const Post = ({ post }) => {
                 </div>
 
                 <div className={classes.overlay2}>
-                    <Button style={{ color: "white" }} size="small" onClick={() => { }}>
+                <Button style={{ color: "white" }} size="small" onClick={() => { setCurrentId(post._id) }}>
                         <MoreHorizIcon fontSize="medium" />
                     </Button>
                 </div>
@@ -28,8 +29,9 @@ const Post = ({ post }) => {
                     </Typography>
                 </div>
 
+                    <Typography className={classes.title} variant="h5" gutterBottom color="textSecondary">{post.title}</Typography>
                 <CardContent>
-                    <Typography className={classes.title} variant="h5" gutterBottom color="textSecondary">{post.messages}</Typography>
+                    <Typography variant="h5" gutterBottom color="textSecondary">{post.messages}</Typography>
                 </CardContent>
                 
                 <CardActions className={classes.cardActions}>
