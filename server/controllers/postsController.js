@@ -16,19 +16,13 @@ const createPost = async (req, res) => {
     // const { creator, title, message, tags, selectedFile } = req.body;
     const post = req.body;
     try {
-        // const newPostMessage = await PostMessage.create({
-        //     creator, title, message, tags,selectedFile
-        // });   
-        // console.log(newPostMessage);    
 
-        // OR
-
-        const newPostMessage = new PostMessage(post);
+        const newPostMessage = new PostMessage({...post, creator:req.userId ,createdAt:new Date().toISOString()});
         await newPostMessage.save();
 
         return res.status(201).json(newPostMessage);
     } catch (error) {
-        res.status(409).json({ message: error.message + " abc" });
+        res.status(409).json({ message: error.message});
     }
 };
 
@@ -59,12 +53,28 @@ const deletePost = async (req, res) => {
 const likePost = async (req, res) => {
 
     const { id } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).send("id is not valid");
+    //req.userId is coming from middleware auth if it is not present it will return the given msg 
+    if(!req.userId){
+        return res.json({message:"user unauthenticatd"});
     }
+    // if user authorized then we will go further (it checked by token verification in auth.js middleware)
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.send("id is not valid");
+    }
     const post = await PostMessage.findById(id);
-    const updatedPost = await PostMessage.findByIdAndUpdate(id, { likeCount: post.likeCount +1 },{new :true})
+    // now we will check that our post has req.userId present in it if yes it will return its index or -1(not present)
+    const index=post.likeCount.findIndex((id)=>id===String(req.userId));
+    // if it is not present then it will push that id to post.likes array (Liking Funtionality)
+    if(index===-1){
+        post.likeCount.push(req.userId);
+    }else{
+            // if it is alredy present then it will remove that id from post.likes array (Unliking Functionality)
+        post.likeCount = post.likeCount.filter((id) => id !== String(req.userId));
+    }
+    //we have to change likes model fromtype number to array and default with [] means 0 likes 
+    // wrt to above code it will populate post.likes means update post by given below statement
+    const updatedPost = await PostMessage.findByIdAndUpdate(id, post,{new :true});
     return res.json(updatedPost);
 }
 

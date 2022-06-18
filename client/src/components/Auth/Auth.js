@@ -1,30 +1,68 @@
 import React, { useState } from 'react'
-import { Avatar, Container, Paper, Typography, Grid ,Button} from '@material-ui/core';
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux"
+// import { GoogleLogin } from 'react-google-login';
+import { AUTH } from '../../constants/actionTypes';
+import { Avatar, Container, Paper, Typography, Grid, Button } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 import useStyle from "./styles"
 import Input from './Input';
+import Icon from './icon';
+import { signIn, signUp } from "../../actions/auth.js";
+
+
+const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
 const Auth = () => {
     const classes = useStyle();
-    const [isSignUp,setIsSignUp] = useState(false)
-    // mock state for checking purpose only
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const [isSignUp, setIsSignUp] = useState(false);
+    const [formData, setFormData] = useState(initialState);
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleChange = () => {
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
 
     }
 
-    const handleSubmit = () => {
-
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (isSignUp) {
+           
+            dispatch(signUp(formData, history));
+        } else {
+           
+            dispatch(signIn(formData, history));
+        }
     }
+
+    // const googleSuccess = async (res) => {
+    //     const result = res?.profileObj;
+    //     const token = res?.tokenId;
+    //     console.log("login succesfull");
+    //     try {
+    //         dispatch({ type: AUTH, data: { result, token } });
+
+    //         history.push('/');
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
+
+    // const googleError = () =>console.log('Google Sign In was unsuccessful. Try again later');
+
 
     const handleShowPassword = () => {
         setShowPassword((prev) => !prev);
     }
 
     const toggleSignUp = () => {
-        setIsSignUp((prev)=>!prev);
+        setFormData(initialState);
+        setShowPassword(false)
+        setIsSignUp((prev) => !prev);
     }
 
     return (
@@ -39,8 +77,8 @@ const Auth = () => {
                         {
                             isSignUp && (
                                 <>
-                                    <Input name="firstname" label="First Name" handleChange={handleChange} autoFocus half />
-                                    <Input name="lasttname" label="Last Name" handleChange={handleChange} half />
+                                    <Input name="firstName" label="First Name" handleChange={handleChange} autoFocus half />
+                                    <Input name="lastName" label="Last Name" handleChange={handleChange} half />
                                 </>
                             )
                         }
@@ -56,11 +94,26 @@ const Auth = () => {
                             isSignUp ? "Sign Up" : "Sign In"
                         }
                     </Button>
+
+                    {/* <GoogleLogin
+                        clientId="349706851057-gjr8bc6tb4j1p0drsn6i01m3aobjk1gj.apps.googleusercontent.com"
+                        render={(renderProps) => (
+                            <Button className={classes.googleButton} color="primary" fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
+                                Google Sign In
+                            </Button>
+                        )}
+                        onSuccess={googleSuccess}
+                        onFailure={googleError}
+                        cookiePolicy="single_host_origin"
+                    /> */}
+
                     <Grid container justifyContent='center'>
                         <Grid item>
-                            <Button onClick={toggleSignUp}>{
-                                isSignUp ? "Already have an account? SignIn" : "Don't have an account? SignUp"
-                            }</Button>
+                            <Button onClick={toggleSignUp}>
+                                {
+                                    isSignUp ? "Already have an account? SignIn" : "Don't have an account? SignUp"
+                                }
+                            </Button>
                         </Grid>
                     </Grid>
                 </form>
@@ -69,4 +122,4 @@ const Auth = () => {
     )
 }
 
-export default Auth
+export default Auth;
