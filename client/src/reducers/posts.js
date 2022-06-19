@@ -1,4 +1,4 @@
-import { END_LOADING, START_LOADING } from "../constants/actionTypes";
+import { END_LOADING, FETCH_POST, START_LOADING } from "../constants/actionTypes";
 
 export default (state = [{isLoading:true,posts:[]}], action) => {
     switch (action.type) {
@@ -36,6 +36,9 @@ export default (state = [{isLoading:true,posts:[]}], action) => {
         case "DELETE":
             // return state.filter((post) => { return post._id !== action.payload });
             return { ...state, posts: state.posts.filter((post) => post._id !== action.payload) };
+
+        case FETCH_POST:
+            return  {...state,post:action.payload}; 
 
         default:
             return state;

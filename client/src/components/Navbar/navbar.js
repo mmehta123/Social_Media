@@ -5,7 +5,8 @@ import memories from "../../images/memories.png";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import decode from "jwt-decode"
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+
+
 const Navbar = () => {
     const classes = useStyles();
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
@@ -16,7 +17,7 @@ const Navbar = () => {
 
     const signout = () => {
         dispatch({ type: 'SIGNOUT' });
-        history.push("/");
+        history.push("/auth");
         setUser(null);
     }
 

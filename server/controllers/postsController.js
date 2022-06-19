@@ -97,5 +97,17 @@ const getPostBySearch = async (req, res) => {
     }
 }
 
+const getPostById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const post = await PostMessage.findById(id).lean().exec();   
+        return res.json(post);
 
-module.exports = { getPosts, createPost, updatePost, deletePost, likePost, getPostBySearch };
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+};
+
+
+
+module.exports = { getPosts, createPost, updatePost, deletePost, likePost, getPostBySearch, getPostById };

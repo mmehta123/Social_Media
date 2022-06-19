@@ -36,5 +36,5 @@ export const signUp = (formData) => API.post('/user/signup', formData);
 
 export const fetchPostBySearch=(searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.searchInput || 'none'}&tags=${searchQuery.tags}`);
 
-
+export const fetchPostById=(id) => API.get(`/posts/${id}`);
 
