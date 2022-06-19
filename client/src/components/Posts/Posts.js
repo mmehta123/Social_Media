@@ -5,13 +5,17 @@ import { useSelector } from "react-redux";
 import { Grid, CircularProgress } from "@material-ui/core"
 
 const Posts = ({ setCurrentId }) => {
-    const posts = useSelector((state) => { return state.posts });
+    const {posts,isLoading} = useSelector((state) => { return state.posts });
     const classes = useStyles();
-    // console.log(posts);
 
-
+    if (posts !== undefined){
+        if(!posts.length && !isLoading) {
+            return "Oops! No Posts Found!"; 
+        }
+    }
+    
     return (
-        !posts.length ? <CircularProgress /> : (
+        !posts?.length || isLoading ? <CircularProgress /> : (
             <Grid className={classes.mainContainer} container alignItems="stretch" spacing={3}>
                 {
                 posts.map((post) => (

@@ -32,25 +32,22 @@ const Home = () => {
     const [tags, setTags] = useState([]);
     const history = useHistory();
 
-    useEffect(() => {
-        dispatch(getPosts());
-    }, [dispatch, currentId]);
 
     const handleSearch = () => {
         if (searchInput.trim() || tags) {
             dispatch(fetchPostBySearch({ searchInput, tags: tags.join(',') }));
-            history.push(`/posts/search?searchQuery=${searchInput || 'none'}&tags=${tags.join(',') || 'b'}`);
+            history.push(`/posts/search?searchQuery=${searchInput || 'none'}&tags=${tags.join(',')}`);
         } else {
             history.push("/");
 
         }
     }
-    
+
 
     const addTags = (tag) => {
         setTags([...tags, tag]);
     }
-    
+
     const deleteTags = (delTag) => {
         setTags(tags.filter((tag) => tag !== delTag))
     }
@@ -83,9 +80,11 @@ const Home = () => {
                             <Button variant="contained" color="primary" onClick={handleSearch}>Search</Button>
                         </AppBar>
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
-                        <Paper elevation={6}>
-                            <Pagination />
-                        </Paper>
+                        {(!searchQuery && !tags.length) &&
+                            <Paper elevation={6}>
+                                <Pagination page={page} />
+                            </Paper>
+                        }
                     </Grid>
                 </Grid>
             </Container>
