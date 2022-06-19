@@ -5,7 +5,6 @@ export const getPost = (id) => async (dispatch) => {
     try {
         dispatch({type:START_LOADING});
         const { data } = await api.fetchPostById(id);
-        console.log(data)
         dispatch({ type: FETCH_POST, payload: data });
         dispatch({ type: END_LOADING });
     } catch (error) {
@@ -23,14 +22,13 @@ export const getPosts = (page) => async (dispatch) => {
     }
 }
 
-export const createPost = (post) => async (dispatch) => {
+export const createPost = (post,history) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
 
         const { data } = await api.createPost(post);
-        // console.log(data);
         dispatch({ type: CREATE, payload: data });
-        dispatch({ type: END_LOADING });
+        history.push(`/posts/${data._id}`);
 
     } catch (error) {
         console.log(error.message);

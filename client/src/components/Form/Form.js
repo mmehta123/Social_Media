@@ -4,6 +4,7 @@ import { TextField, Typography, Button, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import {useDispatch,useSelector} from "react-redux";
 import { createPost,updatePost } from "../../actions/posts";
+import { useHistory } from "react-router-dom";
 
 
 
@@ -12,6 +13,7 @@ import { createPost,updatePost } from "../../actions/posts";
 const Form = ({ setCurrentId, currentId }) => {
     const classes = useStyles();
     const dispatch=useDispatch();
+    const history=useHistory();
     const post=useSelector((state)=>currentId ? state.posts.posts.find((p)=>p._id===currentId):null) ;  
     const user=JSON.parse(localStorage.getItem('profile'));
     const [postData, setPostData] = useState({
@@ -33,7 +35,9 @@ const Form = ({ setCurrentId, currentId }) => {
             dispatch(updatePost(currentId, { ...postData,name: user?.result?.name }));
         }else
         {
-            dispatch(createPost({...postData,name:user?.result?.name}));
+            // we want to navigate to newly created post, so we need to use history.push(`/posts/${id)`) but we
+            //  don't have newly created post id so we pass to action create post where we will get current id
+            dispatch(createPost({...postData,name:user?.result?.name},history));
         }
         clear();
     }
