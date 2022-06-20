@@ -30,12 +30,19 @@ const Auth = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // if(formData.password.length<5){
-        //     alert("minimum password length 5 required" );
-        //     return    
-        // }
-        if (isSignUp) {
-           
+        if(formData.password.length<5 || formData.password.length>10){
+            alert("minimum password length 5 required and maximum of 10 characters" );
+            return    
+        }
+        if (isSignUp) {     
+            if(formData.firstName<=0 && formData.lastName<=0) {
+                alert('Please enter a valid first and last name');
+                return 
+            }
+            if(formData.password!==formData.confirmPassword){
+                alert("password and confirm password must be the same");
+                return 
+            }
             dispatch(signUp(formData, history));
         } else {
            
