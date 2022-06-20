@@ -1,7 +1,19 @@
-import { END_LOADING, FETCH_POST, START_LOADING } from "../constants/actionTypes";
+import { END_LOADING, FETCH_POST, START_LOADING ,COMMENT} from "../constants/actionTypes";
 
-export default (state = [{isLoading:true,posts:[]}], action) => {
+export default (state = {isLoading:true,posts:[]}, action) => {
     switch (action.type) {
+        case COMMENT:
+            return { ...state,
+                posts:state.posts.map((post) => {
+                    // if one post matches the current post (payload post) then we will return post with new values means with comments
+                    if(post._id == +action.payload._id){
+                        return action.payload;
+                    }
+                    // else we will return normal post without comments
+                    return post;
+                }),
+            }
+
         case START_LOADING:
             return {...state,isLoading:true}
 

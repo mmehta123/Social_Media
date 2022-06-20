@@ -38,11 +38,6 @@ const Post = ({ post, setCurrentId }) => {
 
     return (
         <Card className={classes.card} raised elevation={20}>
-            <ButtonBase component="span"
-                name="test"
-                className={classes.cardAction}
-                onClick={openPost}
-            >
                 <CardMedia className={classes.media} image={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} title={post.title} />
 
                 <div className={classes.overlay}>
@@ -68,7 +63,6 @@ const Post = ({ post, setCurrentId }) => {
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">&nbsp; {post.message}</Typography>
                 </CardContent>
-            </ButtonBase>
 
             <CardActions className={classes.cardActions}>
                 <Button size="small" color="primary" disabled={!user?.result} onClick={() => { dispatch(likePost(post._id)) }}>

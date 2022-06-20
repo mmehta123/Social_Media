@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from "react-router-dom";
 import useStyles from "./styles.js";
 import { getPost } from '../../actions/posts';
-import { fetchPostBySearch } from '../../actions/posts';
+import Comments from '../comments/Comments.js';
+// import { fetchPostBySearch } from '../../actions/posts';
 
 function PostDetails() {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
@@ -52,12 +53,10 @@ function PostDetails() {
           <Typography variant="h6">Created by: {post.name}</Typography>
           <Typography variant="body1">{moment(post.createdAt).fromNow()}</Typography>
           <Divider style={{ margin: '20px 0' }} />
-          <Typography variant="body1"><strong>Realtime Chat - coming soon!</strong></Typography>
-          <Divider style={{ margin: '20px 0' }} />
-          <Typography variant="body1"><strong>Comments - coming soon!</strong></Typography>
+          <Comments post={post} />
           <Divider style={{ margin: '20px 0' }} />
         </div>
-        <div className={classes.imageSection}>
+        <div className={classes.imageSection}  >
           <img className={classes.media} src={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} alt={post.title} />
         </div>
       </div>
@@ -87,4 +86,4 @@ function PostDetails() {
   );
 }
 
-export default PostDetails
+export default PostDetails;

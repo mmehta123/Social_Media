@@ -8,6 +8,7 @@ export const AUTH = 'AUTH';
 export const SIGNOUT = 'SIGNOUT';
 export const SIGNIN = 'SIGNIN';
 export const FETCH_POST = 'FETCH_POST';
+export const COMMENT = 'COMMENT';
 
 
 export const END_LOADING = 'END_LOADING';

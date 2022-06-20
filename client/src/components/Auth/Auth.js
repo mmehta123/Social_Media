@@ -30,6 +30,10 @@ const Auth = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        // if(formData.password.length<5){
+        //     alert("minimum password length 5 required" );
+        //     return    
+        // }
         if (isSignUp) {
            
             dispatch(signUp(formData, history));

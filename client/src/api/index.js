@@ -1,19 +1,5 @@
 import axios from "axios";
 
-
-// Approach-1
-// const url='http://localhost:5000/posts';
-
-// export const fetchPosts=()=>axios.get(url);
-// export const createPost = (newPost) =>axios.post(url,newPost);
-// export const updatePost = (id, updatePost) => axios.patch(`${url}/${id}`,updatePost);
-// export const deletePost=(id)=>axios.delete(`${url}/${id}`);
-// export const likePost = (id) => axios.patch(`${url}/${id}/likePost`);
-// export const signIn = (formData) => axios.post(`${url2}/user/signin`, formData);
-// export const signUp = (formData) => axios.post(`${url2}/user/signup`, formData);
-
-// Approach-2(Better)
-
 const API = axios.create({ baseURL: 'http://localhost:5000' });
 
 
@@ -37,4 +23,7 @@ export const signUp = (formData) => API.post('/user/signup', formData);
 export const fetchPostBySearch=(searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.searchInput || 'none'}&tags=${searchQuery.tags}`);
 
 export const fetchPostById=(id) => API.get(`/posts/${id}`);
+
+export const commentPost = (comment, postId) => API.post(`/posts/${postId}/comment`,{value: comment});
+
 

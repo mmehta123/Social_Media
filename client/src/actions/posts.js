@@ -1,9 +1,9 @@
 import * as api from "../api";
-import { CREATE, UPDATE, DELETE, FETCH_ALL, START_LOADING, END_LOADING, LIKE, FETCH_BY_SEARCH, FETCH_POST } from "../constants/actionTypes.js"
+import { CREATE, UPDATE, DELETE, FETCH_ALL, START_LOADING, END_LOADING, LIKE, FETCH_BY_SEARCH, FETCH_POST, COMMENT } from "../constants/actionTypes.js"
 
 export const getPost = (id) => async (dispatch) => {
     try {
-        dispatch({type:START_LOADING});
+        dispatch({ type: START_LOADING });
         const { data } = await api.fetchPostById(id);
         dispatch({ type: FETCH_POST, payload: data });
         dispatch({ type: END_LOADING });
@@ -22,7 +22,7 @@ export const getPosts = (page) => async (dispatch) => {
     }
 }
 
-export const createPost = (post,history) => async (dispatch) => {
+export const createPost = (post, history) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
 
@@ -63,28 +63,25 @@ export const likePost = (id) => async (dispatch) => {
     }
 }
 
-// export const likePost = (id) => async (dispatch) => {
-//     const user = JSON.parse(localStorage.getItem('profile'));
-
-//     try {
-//         const { data } = await api.likePost(id, user?.token);
-
-//         dispatch({ type: LIKE, payload: data });
-//     } catch (error) {
-//         console.log(error);
-//     }
-// };
-
 export const fetchPostBySearch = (searchQuery) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
 
-        const {data:{data}} = await api.fetchPostBySearch(searchQuery);
-        dispatch({ type: FETCH_BY_SEARCH,payload:data});
+        const { data: { data } } = await api.fetchPostBySearch(searchQuery);
+        dispatch({ type: FETCH_BY_SEARCH, payload: data });
         dispatch({ type: END_LOADING });
     } catch (e) {
         console.log(e);
     }
+}
+export const commentPost = (comment, postId) => async (dispatch) => {
+    try {
+        const { data } = await api.commentPost(comment, postId);
+        dispatch({ type: COMMENT, payload: data });
+        // it will directly return comments look in comments/comments.js
+        return data.Comments;
+    } catch (e) { console.log(e); }
+
 }
 
 

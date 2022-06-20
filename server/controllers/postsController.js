@@ -10,7 +10,7 @@ const getPosts = async (req, res) => {
         // const total =await PostMessage.find().count(); //also works 
 
         const postMessages = await PostMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(start);    //newest posts first
-        res.status(200).json({postMessages:postMessages,currentPage:Number(page),totalPages:Math.ceil(total/LIMIT)});
+        res.status(200).json({ postMessages: postMessages, currentPage: Number(page), totalPages: Math.ceil(total / LIMIT) });
 
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -100,7 +100,7 @@ const getPostBySearch = async (req, res) => {
 const getPostById = async (req, res) => {
     const { id } = req.params;
     try {
-        const post = await PostMessage.findById(id).lean().exec();   
+        const post = await PostMessage.findById(id).lean().exec();
         return res.json(post);
 
     } catch (error) {
@@ -108,6 +108,21 @@ const getPostById = async (req, res) => {
     }
 };
 
+const commentPost = async (req, res) => {
+    try {
+        const {id}= req.params;
+        const {value}= req.body;
+        const post =await PostMessage.findById(id);
+
+        post.Comments.push(value);
+        const updatedPost= await PostMessage.findByIdAndUpdate(id, post,{new: true});
+        return res.json(updatedPost);
+
+    } catch (error) {
+        return res.json({message: error});
+    }
+}
 
 
-module.exports = { getPosts, createPost, updatePost, deletePost, likePost, getPostBySearch, getPostById };
+
+module.exports = { getPosts, createPost, updatePost, deletePost, likePost, getPostBySearch, getPostById, commentPost };

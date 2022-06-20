@@ -1,22 +1,26 @@
-const mongoose=require("mongoose");
+const mongoose = require("mongoose");
 
-const postSchema=mongoose.Schema({
-    title:String,
+const postSchema = mongoose.Schema({
+    title: String,
     message: String,
     name: String,
-    creator:String,
-    selectedFile:String,
-    tags:[String],
-    likeCount:{
-        type:[String],
-        default:[]
+    creator: String,
+    selectedFile: String,
+    tags: [String],
+    likeCount: {
+        type: [String],
+        default: []
     },
-    createdAt:{
-        type:Date,
+    Comments: {
+        type: [String],
+        default: []
+    },
+    createdAt: {
+        type: Date,
         default: new Date()
     }
 });
 
-const postMessage=mongoose.model("PostMessage",postSchema);
+const postMessage = mongoose.model("PostMessage", postSchema);
 
-module.exports=postMessage;
+module.exports = postMessage;
