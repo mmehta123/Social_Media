@@ -1,4 +1,4 @@
-import { END_LOADING, FETCH_POST, START_LOADING ,COMMENT} from "../constants/actionTypes";
+import { END_LOADING, FETCH_POST, START_LOADING ,COMMENT, USER_PROFILE} from "../constants/actionTypes";
 
 export default (state = {isLoading:true,posts:[]}, action) => {
     switch (action.type) {
@@ -6,8 +6,8 @@ export default (state = {isLoading:true,posts:[]}, action) => {
             return { ...state,
                 posts:state.posts.map((post) => {
                     // if one post matches the current post (payload post) then we will return post with new values means with comments
-                    if(post._id == +action.payload._id){
-                        return action.payload;
+                    if(post._id === +action.payload._id){
+                        return action.payload; 
                     }
                     // else we will return normal post without comments
                     return post;
@@ -51,6 +51,9 @@ export default (state = {isLoading:true,posts:[]}, action) => {
 
         case FETCH_POST:
             return  {...state,post:action.payload}; 
+
+        case USER_PROFILE:
+            return {...state,userpost:action.payload};
 
         default:
             return state;

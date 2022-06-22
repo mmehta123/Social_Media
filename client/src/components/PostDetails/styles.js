@@ -38,4 +38,12 @@ export default makeStyles((theme) => ({
     loadingPaper: {
         display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px', borderRadius: '15px', height: '39vh',
     },
+    innerDiv: {
+        borderRadius: '15px',
+        padding: '10px',
+        margin: '20px'
+        , cursor: 'pointer',
+        border: '1px solid black'
+        , border: '1px solid black'
+    }
 }));

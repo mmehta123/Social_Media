@@ -30,22 +30,22 @@ const Auth = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(formData.password.length<5 || formData.password.length>10){
-            alert("minimum password length 5 required and maximum of 10 characters" );
-            return    
+        if (formData.password.length < 5 || formData.password.length > 10) {
+            alert("minimum password length 5 required and maximum of 10 characters");
+            return
         }
-        if (isSignUp) {     
-            if(formData.firstName<=0 && formData.lastName<=0) {
+        if (isSignUp) {
+            if (formData.firstName <= 0 && formData.lastName <= 0) {
                 alert('Please enter a valid first and last name');
-                return 
+                return
             }
-            if(formData.password!==formData.confirmPassword){
+            if (formData.password !== formData.confirmPassword) {
                 alert("password and confirm password must be the same");
-                return 
+                return
             }
             dispatch(signUp(formData, history));
         } else {
-           
+
             dispatch(signIn(formData, history));
         }
     }
@@ -82,7 +82,7 @@ const Auth = () => {
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
-                <Typography variant="h5">{isSignUp ? "Sign Up" : "Sign In"}</Typography>
+                <Typography variant="h4">{isSignUp ? "Sign Up" : "Sign In"}</Typography>
                 <form className={classes.form} onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         {
@@ -100,7 +100,7 @@ const Auth = () => {
                                 <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" />
                             )}
                     </Grid>
-                    <Button className={classes.submit} type="submit" fullWidth variant="contained" color="primary">
+                    <Button className={classes.submit} type="submit" fullWidth variant="contained" color="secondary">
                         {
                             isSignUp ? "Sign Up" : "Sign In"
                         }

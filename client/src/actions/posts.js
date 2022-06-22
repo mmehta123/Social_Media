@@ -1,5 +1,5 @@
 import * as api from "../api";
-import { CREATE, UPDATE, DELETE, FETCH_ALL, START_LOADING, END_LOADING, LIKE, FETCH_BY_SEARCH, FETCH_POST, COMMENT } from "../constants/actionTypes.js"
+import { CREATE, UPDATE, DELETE, FETCH_ALL, START_LOADING, END_LOADING, LIKE, FETCH_BY_SEARCH, FETCH_POST, COMMENT, USER_PROFILE } from "../constants/actionTypes.js"
 
 export const getPost = (id) => async (dispatch) => {
     try {
@@ -81,8 +81,21 @@ export const commentPost = (comment, postId) => async (dispatch) => {
         // it will directly return comments look in comments/comments.js
         return data.Comments;
     } catch (e) { console.log(e); }
+}
+
+export const getProfile = (userid) => async (dispatch) => {
+    try {
+        dispatch({ type: START_LOADING });
+        const { data } = await api.getProfile(userid);
+        dispatch({ type: USER_PROFILE, payload: data });
+        dispatch({ type: END_LOADING });
+    } catch (error) {
+        console.log(error);
+    }
+
 
 }
+
 
 
 

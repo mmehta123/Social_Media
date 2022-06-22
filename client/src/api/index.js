@@ -26,4 +26,6 @@ export const fetchPostById=(id) => API.get(`/posts/${id}`);
 
 export const commentPost = (comment, postId) => API.post(`/posts/${postId}/comment`,{value: comment});
 
+export const getProfile=(userid)=>API.get(`/posts/userposts/${userid}`);
+
 

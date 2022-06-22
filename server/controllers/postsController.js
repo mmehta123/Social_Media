@@ -110,19 +110,31 @@ const getPostById = async (req, res) => {
 
 const commentPost = async (req, res) => {
     try {
-        const {id}= req.params;
-        const {value}= req.body;
-        const post =await PostMessage.findById(id);
+        const { id } = req.params;
+        const { value } = req.body;
+        const post = await PostMessage.findById(id);
 
         post.Comments.push(value);
-        const updatedPost= await PostMessage.findByIdAndUpdate(id, post,{new: true});
+        const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true });
         return res.json(updatedPost);
 
     } catch (error) {
-        return res.json({message: error});
+        return res.json({ message: error });
     }
+}
+
+const getProfile = async (req,res) => {
+    try {
+        const { id } = req.params;
+        const posts=await PostMessage.find({creator:id}).lean().exec();
+        return res.json(posts);
+    } catch (error) { 
+        console.log("error");
+        return res.json({ message: error }); 
+    }
+
 }
 
 
 
-module.exports = { getPosts, createPost, updatePost, deletePost, likePost, getPostBySearch, getPostById, commentPost };
+module.exports = { getPosts, createPost, updatePost, deletePost, likePost, getPostBySearch, getPostById, commentPost, getProfile };

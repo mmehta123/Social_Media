@@ -9,6 +9,7 @@ export const SIGNOUT = 'SIGNOUT';
 export const SIGNIN = 'SIGNIN';
 export const FETCH_POST = 'FETCH_POST';
 export const COMMENT = 'COMMENT';
+export const USER_PROFILE ="USER_PROFILE";
 
 
 export const END_LOADING = 'END_LOADING';
