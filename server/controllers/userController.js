@@ -12,7 +12,7 @@ const signin = async (req, res) => {
         }
         const isPasswordCorrect = await bcrypt.compare(password, user.password);
         if (!isPasswordCorrect) {
-            return res.json({ message: "Invalid credentials ",status:false });
+            return res.json({ message: "Invalid credentials ", status: false });
         }
         const token = jwt.sign({ email: user.email, id: user._id }, 'test', { expiresIn: "1h" });
         return res.json({ result: user, token, status: true });
@@ -40,4 +40,17 @@ const signup = async (req, res) => {
     }
 }
 
-module.exports = { signin, signup }
+const updateUserData = async (req, res) => {
+    try {
+        const data = req.body;
+        const { id } = req.params;
+       const user= await UserModel.findByIdAndUpdate(id, data,{new: true });
+        const token = jwt.sign({ email: user.email, id: user._id }, 'test', { expiresIn: "1h" });
+        return res.json({ result: user,token, message: "Profile inforamtion updated successfully", status: true });
+
+    } catch (error) { console.log(error); return res.json({ message: "something went wrong", status: false }); }
+
+}
+
+
+module.exports = { signin, signup, updateUserData }

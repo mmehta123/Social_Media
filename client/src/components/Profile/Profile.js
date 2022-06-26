@@ -20,6 +20,10 @@ export const Profile = () => {
   const userid = user.result._id;
   const name = user.result.name;
   const email = user.result.email;
+  const age = user.result.age;
+  const city= user.result.city;
+  const state= user.result.state;
+
 
   const { userpost, isLoading } = useSelector((state) => state.posts);
 
@@ -71,6 +75,10 @@ export const Profile = () => {
       <div >
         <h4>Name:{name}</h4>
         <h4>Email:{email}</h4>
+        <h4>Age:{age}</h4>
+        <h4>City:{city}</h4>
+        <h4>State:{state}</h4>
+        <button onClick={()=>history.push("/editProfile")}>Edit Profile</button>
       </div>
 
     );

@@ -28,4 +28,4 @@ export const commentPost = (comment, postId) => API.post(`/posts/${postId}/comme
 
 export const getProfile=(userid)=>API.get(`/posts/userposts/${userid}`);
 
-
+export const updateUserData=(userId,info)=>API.patch(`/user/updateuserdata/${userId}`,info);
