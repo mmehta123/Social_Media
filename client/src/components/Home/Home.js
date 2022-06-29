@@ -34,10 +34,11 @@ const Home = () => {
 
 
     const handleSearch = () => {
-        if (searchInput.trim() || tags) {
+        if (searchInput.trim() || tags ) {
             dispatch(fetchPostBySearch({ searchInput, tags: tags.join(',') }));
             history.push(`/posts/search?searchQuery=${searchInput || 'none'}&tags=${tags.join(',')}`);
         } else {
+            alert('Please enter search input');
             history.push("/");
 
         }

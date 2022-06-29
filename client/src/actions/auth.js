@@ -8,6 +8,8 @@ export const signIn = (formData, router) => async (dispatch) => {
         if (data.status) {
             dispatch({ type: AUTH, data });
             router.push("/");
+        }else{
+            alert(data.message)
         }
 
     } catch (error) {
@@ -21,6 +23,9 @@ export const signUp = (formData, router) => async (dispatch) => {
         if (data.status) {
             dispatch({ type: AUTH, data });
             router.push("/");
+        }
+        else {
+            alert(data.message);
         }
     } catch (error) {
         console.log(error)

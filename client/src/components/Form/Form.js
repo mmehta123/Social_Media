@@ -31,15 +31,18 @@ const Form = ({ setCurrentId, currentId }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(currentId){
+        if(currentId && postData.title && postData.message){
             dispatch(updatePost(currentId, { ...postData,name: user?.result?.name }));
-        }else
+            clear();
+        } else if (postData.title && postData.message)
         {
             // we want to navigate to newly created post, so we need to use history.push(`/posts/${id)`) but we
             //  don't have newly created post id so we pass to action create post where we will get current id
             dispatch(createPost({...postData,name:user?.result?.name},history));
+            clear();
+        }else{
+            alert("Title or Message field cannot be empty");
         }
-        clear();
     }
 
     const clear=()=>{

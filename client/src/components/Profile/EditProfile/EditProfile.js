@@ -3,7 +3,7 @@ import { Card, TextField, Typography, Button, Paper } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import useStyles from "./styles.js"
-import {updateUserData} from "../../../actions/auth"
+import { updateUserData } from "../../../actions/auth"
 
 
 
@@ -22,10 +22,18 @@ export const EditProfile = () => {
     });
 
     const handleSubmit = () => {
-        if(userId){
-            dispatch(updateUserData(userId, info ));
+
+        if (userId && info.name && (info.age > 0) && info.city && info.state) {
+            dispatch(updateUserData(userId, info));
+            clear();
+            alert("Profile updated successfully");
         }
-        clear();
+        else if (info.age <= 0) {
+            alert("age must be greater than zero");
+        }
+        else {
+            alert("All fields are required!");
+        }
     }
 
     const clear = () => {
