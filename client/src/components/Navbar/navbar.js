@@ -5,6 +5,7 @@ import memories from "../../images/memories.png";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import decode from "jwt-decode"
+import ChatIcon from '@material-ui/icons/Chat';
 
 
 const Navbar = () => {
@@ -13,6 +14,7 @@ const Navbar = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
+    console.log(user)
     
     const handleAvatarClick=()=>{
         history.push("/userpost");
@@ -36,7 +38,10 @@ const Navbar = () => {
         setUser(JSON.parse(localStorage.getItem('profile')));
     }, [location]);
 
-
+    const ChatHandler=()=>{
+    console.log("chat clicked");
+        history.push("/chat");
+    }
 
 
     return (
@@ -49,6 +54,7 @@ const Navbar = () => {
             <Toolbar className={classes.toolbar}>
                 {user ?
                     <div className={classes.profile}>
+                        <Button onClick={ChatHandler}><ChatIcon/></Button>
                         <Button onClick={handleAvatarClick}>
                         <Avatar className={classes.purple} alt={user.result.name  } >{user.result.name}</Avatar>
                         </Button>

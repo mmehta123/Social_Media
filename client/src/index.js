@@ -6,6 +6,7 @@ import { applyMiddleware, createStore, compose } from "redux"
 import thunk from "redux-thunk";
 import reducers from "./reducers"
 import './index.css'
+import reportWebVitals from "./reportWebVitals"
 
 
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
@@ -15,5 +16,5 @@ ReactDOM.render(
         <App />
     </Provider>
     , document.getElementById('root')
-
-);
+);  
+reportWebVitals();

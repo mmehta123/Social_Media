@@ -7,6 +7,8 @@ import Auth from "./components/Auth/Auth";
 import PostDetails from "./components/PostDetails/PostDetails";
 import { Profile } from "./components/Profile/Profile";
 import { EditProfile } from "./components/Profile/EditProfile/EditProfile.js";
+import  {ChatRoom}  from "./components/Chat/ChatRoom";
+import "./App.css"
 const App = () => {
         const user=JSON.parse(localStorage.getItem('profile'));
     
@@ -25,6 +27,7 @@ const App = () => {
                         <Route path="/auth" exact component={Auth}/>
                         <Route path="/userpost" exact component={Profile}></Route>
                         <Route path="/editProfile" exact component={EditProfile}></Route>
+                        <Route path="/chat" exact component={ChatRoom}></Route>
                     </Switch>
                 </Container>
             </BrowserRouter>
